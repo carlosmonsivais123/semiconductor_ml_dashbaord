@@ -3,3 +3,5 @@ Data_Location:
   secom_data_labels_location: '/Users/carlosmonsivais/Desktop/secom/data/secom_labels.data'
 
 EDA_Visualizatiion_Graph_Output: '/Users/carlosmonsivais/Desktop/secom/EDA_Visualization'
+
+Missing_Value_Threshold: 0.80

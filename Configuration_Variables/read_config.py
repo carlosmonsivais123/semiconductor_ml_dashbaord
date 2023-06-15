@@ -9,3 +9,6 @@ secom_data_labels_location=input_vars['Data_Location']['secom_data_labels_locati
 
 # EDA Visualizatiion Graph Output
 eda_visualizatiion_graph_output=input_vars['EDA_Visualizatiion_Graph_Output']
+
+# Missing Values Threshold
+missing_value_threshold=input_vars['Missing_Value_Threshold']
