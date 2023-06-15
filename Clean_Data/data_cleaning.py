@@ -60,4 +60,4 @@ class Clean_Data:
                     cbar_kws={'label': 'Missing Data'}).set(title='Missing Values After Dropped Columns Heatmap',
                                                             xlabel='Columns', 
                                                             ylabel='Rows')
-        plt.savefig(f"{plot_location}/all_missing_values.png", dpi=100)
+        plt.savefig(f"{plot_location}/missing_values_after_dropped_cols.png", dpi=100)
