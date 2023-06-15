@@ -1,0 +1,5 @@
+Data_Location:
+  secom_data_values_location: '/Users/carlosmonsivais/Desktop/secom/data/secom.data'
+  secom_data_labels_location: '/Users/carlosmonsivais/Desktop/secom/data/secom_labels.data'
+
+EDA_Visualizatiion_Graph_Output: '/Users/carlosmonsivais/Desktop/secom/EDA_Visualization'
