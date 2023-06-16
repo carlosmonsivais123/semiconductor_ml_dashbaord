@@ -32,9 +32,13 @@ clean_df=clean_data.remove_cols_over_missing_threhsold_val(df=data_df,
 clean_df=clean_data.remove_columns_with_n_unique_vals(df=clean_df,
                                                       unique_value_threshold=unique_value_threshold)
 
+# Imputation Pipeline Using the Median
+clean_df=clean_data.imputing_with_median(df=clean_df)
+
 # Missing Values Heatmap: After Removing Features from Missing Value Percentage and Unique Value Threshold
 clean_data.all_missing_values_after_dropped_cols_visualizations(df=clean_df, 
                                                                 plot_location=eda_visualizatiion_graph_output)
+
 
 
 ################## EDA ##################

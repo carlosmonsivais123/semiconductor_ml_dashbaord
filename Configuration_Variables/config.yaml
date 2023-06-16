@@ -4,6 +4,6 @@ Data_Location:
 
 EDA_Visualizatiion_Graph_Output: '/Users/carlosmonsivais/Desktop/secom/EDA_Output_Plots'
 
-Missing_Value_Threshold: 0.80
+Missing_Value_Threshold: 0.95
 Unique_Value_Threshold: 3
 Correlation_Drop_Threshold: 0.70

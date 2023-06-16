@@ -1,6 +1,9 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+import numpy as np
 
 class Clean_Data:
     def all_missing_values_visualizations(self, df, plot_location):
@@ -76,3 +79,21 @@ class Clean_Data:
                                                             xlabel='Columns', 
                                                             ylabel='Rows')
         plt.savefig(f"{plot_location}/missing_values_after_dropped_cols.png", dpi=100)
+
+
+    def imputing_with_median(self, df):
+        df_new=df.copy()
+        df_new.columns=df_new.columns.astype(str)
+
+        imputation_list=[ele for ele in df_new.columns.tolist() if ele not in ['Label', 'Time', 'day_of_week']]
+
+        column_imputation=ColumnTransformer([('imp_col1', 
+                                              SimpleImputer(missing_values=np.nan, strategy='median'), 
+                                              imputation_list)],
+                                              remainder='passthrough')
+        column_imputation.set_output(transform='pandas')
+        df_new=column_imputation.fit_transform(df_new)
+
+        df_new.columns=df.columns.tolist()
+
+        return df_new
