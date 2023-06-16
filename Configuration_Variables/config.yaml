@@ -14,7 +14,7 @@ EDA_Visualizatiion_Graph_Output: '/Users/carlosmonsivais/Desktop/secom/EDA_Outpu
 ################## Data Cleaning Values ##################
 Missing_Value_Threshold: 0.95
 Unique_Value_Threshold: 3
-Correlation_Drop_Threshold: 0.70
+Correlation_Drop_Threshold: 0.60
 
 
 ################## Random State ##################
