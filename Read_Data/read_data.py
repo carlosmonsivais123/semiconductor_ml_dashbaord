@@ -28,6 +28,6 @@ class Read_And_Merge_Data:
 
         combined_df['day_of_week']=combined_df['Time'].dt.day_name()
 
-        print(f'The shape of the combined values and labels is {combined_df.shape}')
+        print(f'The shape of the combined values and labels is {combined_df.shape}\n')
 
         return combined_df

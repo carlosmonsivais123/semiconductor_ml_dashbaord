@@ -52,7 +52,7 @@ class Exploratory_Data_Analysis:
                                     selection_method='missing_values').\
                                         fit_transform(df)
         
-        print(f'After removing features with over an {correlation_threshold*100}% correlation the data has a shape of {df.shape}')
+        print(f'After removing features with over an {correlation_threshold*100}% correlation the data has a shape of {df.shape}\n')
         
         return df
     

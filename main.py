@@ -1,15 +1,19 @@
 from Configuration_Variables.read_config import secom_data_values_location, secom_data_labels_location, \
                                                 eda_visualizatiion_graph_output, \
                                                 missing_value_threshold, unique_value_threshold, \
-                                                correlation_drop_threshold
+                                                correlation_drop_threshold, \
+                                                random_state_value, \
+                                                training_data_output_location, testing_data_output_location
 from Read_Data.read_data import Read_And_Merge_Data
 from Clean_Data.data_cleaning import Clean_Data
 from EDA.eda_plots import Exploratory_Data_Analysis
+from Data_Split.train_test_split_proportionally import Create_Train_Test_Split
 
 read_and_merge_data=Read_And_Merge_Data(secom_data_values_location=secom_data_values_location, 
                                         secom_data_labels=secom_data_labels_location)
 clean_data=Clean_Data()
 exploratory_data_analysis=Exploratory_Data_Analysis()
+create_train_test_split=Create_Train_Test_Split()
 
 
 ################## Cleaning Data ##################
@@ -68,3 +72,18 @@ exploratory_data_analysis.label_counts_by_dow(df=clean_df_corr_drop,
 
 
 ################## Splitting Data ##################
+train_test_data=create_train_test_split.create_and_save_train_test_split(df=clean_df_corr_drop,
+                                                                         random_state_value=random_state_value,
+                                                                         training_data_output_location=training_data_output_location, 
+                                                                         testing_data_output_location=testing_data_output_location)
+
+training_df=train_test_data[0]
+testing_df=train_test_data[1]
+
+
+create_train_test_split.evaluate_data_balance_for_train_test_split(train_df=training_df, 
+                                                                   test_df=testing_df,
+                                                                   plot_location=eda_visualizatiion_graph_output)
+
+
+################## Model Selection ##################

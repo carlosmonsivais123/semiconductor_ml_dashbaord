@@ -51,7 +51,7 @@ class Clean_Data:
 
         print(f'Originally the shape of the data is {df.shape}')
         df=df.drop(columns=remove_columns)
-        print(f'Ater removing columns missing {missing_value_threshold * 100}% of data the shape of the data is {df.shape}')
+        print(f'Ater removing columns missing {missing_value_threshold * 100}% of data the shape of the data is {df.shape}\n')
 
         return df
     
@@ -66,7 +66,7 @@ class Clean_Data:
 
         df=df.drop(columns=remove_cols)
 
-        print(f'Ater removing columns with only {unique_value_threshold} unique values or less, the shape of the data is {df.shape}')
+        print(f'Ater removing columns with only {unique_value_threshold} unique values or less, the shape of the data is {df.shape}\n')
 
         return df
 
