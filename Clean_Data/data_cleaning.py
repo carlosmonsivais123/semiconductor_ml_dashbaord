@@ -7,7 +7,7 @@ class Clean_Data:
         plt.figure(figsize=(10,6))
         sns.heatmap(df.isna(),
                     cmap="YlGnBu",
-                    cbar_kws={'label': 'Missing Data'}).set(title='Missing Values Heatmap',
+                    cbar_kws={'label': 'Missing Data'}).set(title='Missing Values Heatmap: All Data',
                                                             xlabel='Columns', 
                                                             ylabel='Rows')
         plt.savefig(f"{plot_location}/all_missing_values.png", dpi=100)
@@ -53,11 +53,26 @@ class Clean_Data:
         return df
     
 
+    def remove_columns_with_n_unique_vals(self, df, unique_value_threshold):
+        unique_vals=df.nunique().reset_index(drop=False).\
+            rename(columns={'index': 'Column', 0:'Number of Unique Values'}).\
+                sort_values(by='Number of Unique Values', ascending=True)
+        unique_vals=unique_vals[unique_vals['Number of Unique Values']<=unique_value_threshold]
+        remove_cols=unique_vals['Column'].values.tolist()
+        remove_cols.remove('Label')
+
+        df=df.drop(columns=remove_cols)
+
+        print(f'Ater removing columns with only {unique_value_threshold} unique values or less, the shape of the data is {df.shape}')
+
+        return df
+
+
     def all_missing_values_after_dropped_cols_visualizations(self, df, plot_location):
         plt.figure(figsize=(10,6))
         sns.heatmap(df.isna(),
                     cmap="YlGnBu",
-                    cbar_kws={'label': 'Missing Data'}).set(title='Missing Values After Dropped Columns Heatmap',
+                    cbar_kws={'label': 'Missing Data'}).set(title='Missing Values Heatmap: After Dropped Columns',
                                                             xlabel='Columns', 
                                                             ylabel='Rows')
         plt.savefig(f"{plot_location}/missing_values_after_dropped_cols.png", dpi=100)

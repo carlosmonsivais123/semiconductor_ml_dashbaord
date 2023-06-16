@@ -12,3 +12,9 @@ eda_visualizatiion_graph_output=input_vars['EDA_Visualizatiion_Graph_Output']
 
 # Missing Values Threshold
 missing_value_threshold=input_vars['Missing_Value_Threshold']
+
+# Unique Value Threshold
+unique_value_threshold=input_vars['Unique_Value_Threshold']
+
+# Correlation Drop Threshold
+correlation_drop_threshold=input_vars['Correlation_Drop_Threshold']
