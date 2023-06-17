@@ -88,49 +88,8 @@ create_train_test_split.evaluate_data_balance_for_train_test_split(train_df=trai
 X_train, y_train, X_test, y_test=create_classification_models.create_X_and_y_data(train_df=training_df, 
                                                                                   test_df=testing_df)
 
-# pipe=create_classification_models.create_xgboost_model(train_df=X_train,
-#                                                        test_df=y_train,
-#                                                        X_test=X_test,
-#                                                        y_test=y_test)
+create_classification_models.gridsearch_cv_best_model_mlflow(train_df=X_train,
+                                                             test_df=y_train,
+                                                             X_test=X_test,
+                                                             y_test=y_test)
 
-create_classification_models.gridsearch_cv_best_model(train_df=X_train,
-                                                      test_df=y_train,
-                                                      X_test=X_test,
-                                                      y_test=y_test)
-
-
-
-# print(pipe.score(X_test, y_test))
-
-# from sklearn.metrics import confusion_matrix
-# print(confusion_matrix(y_test, pipe.predict(X_test)))
-
-
-
-# lr_pipe=create_classification_models.create_logistic_regression_model(train_df=X_train,
-#                                                                       test_df=y_train)
-# print(lr_pipe.score(X_test, y_test))
-# print(confusion_matrix(y_test, lr_pipe.predict(X_test)))
-
-
-# rf_pipe=create_classification_models.create_random_forest_model(train_df=X_train,
-#                                                                 test_df=y_train)
-# print(rf_pipe.score(X_test, y_test))
-# print(confusion_matrix(y_test, rf_pipe.predict(X_test)))
-
-# svc_pipe=create_classification_models.create_svc_model(train_df=X_train,
-#                                                        test_df=y_train)
-# print(svc_pipe.score(X_test, y_test))
-# print(confusion_matrix(y_test, svc_pipe.predict(X_test)))
-
-
-# nb_pipe=create_classification_models.create_nb_model(train_df=X_train,
-#                                                        test_df=y_train)
-# print(nb_pipe.score(X_test, y_test))
-# print(confusion_matrix(y_test, nb_pipe.predict(X_test)))
-
-
-# knn_pipe=create_classification_models.create_knn_model(train_df=X_train,
-#                                                        test_df=y_train)
-# print(knn_pipe.score(X_test, y_test))
-# print(confusion_matrix(y_test, knn_pipe.predict(X_test)))

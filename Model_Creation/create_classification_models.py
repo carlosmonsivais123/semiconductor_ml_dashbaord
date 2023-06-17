@@ -11,8 +11,10 @@ from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix 
+import mlflow
+import mlflow.sklearn
+from mlflow.models.signature import infer_signature
 
 class Create_Classification_Models:
     def __init__(self, random_state):
@@ -54,7 +56,7 @@ class Create_Classification_Models:
         return col_transformer
 
 
-    def gridsearch_cv_best_model(self, train_df, test_df, X_test, y_test):
+    def gridsearch_cv_best_model_mlflow(self, train_df, test_df, X_test, y_test):
         train_df, test_df=self.smote_categorical_technique(train_df=train_df, 
                                                            test_df=test_df)
         
@@ -73,11 +75,13 @@ class Create_Classification_Models:
                           'k_nearest_neighbor': KNeighborsClassifier()}
         
         model_parameter_dictionary={'xgboost': [{'objective': ['binary:logistic', 'reg:logistic'],
-                                                 'max_depth': [6, 20],
-                                                 'n_estimators': [100, 200, 300],
+                                                 'max_depth': [6, 20, 40],
+                                                 'n_estimators': [100, 200, 300, 400],
                                                  'booster': ['gbtree', 'gblinear', 'dart'], 
                                                  'learning_rate': [0.01, 0.1, 1.0]}], 
-                                    'logistic_regression': [{'C': [0.01, 0.1, 1.0]}], 
+                                    'logistic_regression': [{'C': [0.01, 0.1, 1.0],
+                                                             'solver': ['lbfgs', 'liblinear', 'newton-cg', 'newton-cholesky', 'sag', 'saga'],
+                                                             'max_iter': [100, 200]}], 
                                     'random_forest': [{'n_estimators': [100, 150, 200],
                                                        'criterion': ['gini', 'entropy', 'log_loss']}], 
                                     'support_vector_machine': [{'C': [0.001, 0.1, 1.0],
@@ -87,22 +91,39 @@ class Create_Classification_Models:
                                                              'weights': ['uniform', 'distance'],
                                                              'algorithm': ['ball_tree', 'kd_tree', 'brute']}]}
 
-        confusion_matrix_list=[]
-
         for model in model_selection:
-            column_transformer=self.data_scaling_and_encoding(df=train_df)
+            with mlflow.start_run(run_name=f'{model}_gridsearch_cv_smote'):
+                column_transformer=self.data_scaling_and_encoding(df=train_df)
 
-            grid_search_optimization=GridSearchCV(model_dictionary[model],
-                                                  param_grid=model_parameter_dictionary[model],
-                                                  scoring=accuracy_score,
-                                                  refit=True,
-                                                  cv=3)
+                grid_search_optimization=GridSearchCV(model_dictionary[model],
+                                                    param_grid=model_parameter_dictionary[model],
+                                                    scoring=accuracy_score,
+                                                    refit=True,
+                                                    cv=3)
 
-            sklearn_pipeline=Pipeline(steps=[('col_transformer_step', column_transformer),
-                                             (f'{model}_cv_step', grid_search_optimization)])
+                sklearn_pipeline=Pipeline(steps=[('col_transformer_step', column_transformer),
+                                                (f'{model}_cv_step', grid_search_optimization)])
 
-            sklearn_pipeline.fit(train_df, test_df)
+                sklearn_pipeline.fit(train_df, test_df)
 
-            confusion_matrix_list.append(confusion_matrix(y_test, sklearn_pipeline.predict(X_test)))
+                predictions=sklearn_pipeline.predict(X_test)
 
-        print(confusion_matrix_list)
+                mlflow.log_metric(f"accuracy", 
+                                  accuracy_score(y_test, predictions))
+                mlflow.log_metric(f"precision", 
+                                  precision_score(y_test, predictions))
+                mlflow.log_metric(f"recall", 
+                                  recall_score(y_test, predictions))
+                mlflow.log_metric(f"f1", 
+                                  f1_score(y_test, predictions))
+                mlflow.log_dict(confusion_matrix(y_test, predictions).tolist(), 
+                                f"confusion_matrix.txt")
+
+                signature=infer_signature(X_test, predictions)
+                mlflow.sklearn.log_model(sklearn_pipeline, 
+                                         f"{model}_smote", 
+                                         signature=signature, 
+                                         registered_model_name=f"{model}_smote")
+
+                run = mlflow.active_run()
+                print("Run ID: {}".format(run.info.run_id))
