@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/carlosmonsivais/Desktop/secom/mlruns/0/988e270560d547d98cf7564027863037/artifacts
+end_time: 1686987072158
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 988e270560d547d98cf7564027863037
+run_name: xgboost_gridsearch_cv_smote
+run_uuid: 988e270560d547d98cf7564027863037
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1686985359558
+status: 3
+tags: []
+user_id: carlosmonsivais

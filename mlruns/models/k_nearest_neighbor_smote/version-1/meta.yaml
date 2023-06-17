@@ -1,0 +1,13 @@
+aliases: []
+creation_timestamp: 1686987119149
+current_stage: None
+description: null
+last_updated_timestamp: 1686987119149
+name: k_nearest_neighbor_smote
+run_id: 279350b8f28643658dcafc7884370a24
+run_link: null
+source: file:///Users/carlosmonsivais/Desktop/secom/mlruns/0/279350b8f28643658dcafc7884370a24/artifacts/k_nearest_neighbor_smote
+status: READY
+status_message: null
+user_id: null
+version: 1

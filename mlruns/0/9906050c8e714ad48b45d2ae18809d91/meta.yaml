@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/carlosmonsivais/Desktop/secom/mlruns/0/9906050c8e714ad48b45d2ae18809d91/artifacts
+end_time: 1686987079535
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 9906050c8e714ad48b45d2ae18809d91
+run_name: logistic_regression_gridsearch_cv_smote
+run_uuid: 9906050c8e714ad48b45d2ae18809d91
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1686987072160
+status: 3
+tags: []
+user_id: carlosmonsivais
