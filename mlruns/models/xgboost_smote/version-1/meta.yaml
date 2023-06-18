@@ -1,12 +1,12 @@
 aliases: []
-creation_timestamp: 1686987072157
+creation_timestamp: 1687124615018
 current_stage: None
 description: null
-last_updated_timestamp: 1686987072157
+last_updated_timestamp: 1687124615018
 name: xgboost_smote
-run_id: 988e270560d547d98cf7564027863037
+run_id: 03274822e87f43e2aad5c7e637c81287
 run_link: null
-source: file:///Users/carlosmonsivais/Desktop/secom/mlruns/0/988e270560d547d98cf7564027863037/artifacts/xgboost_smote
+source: file:///Users/carlosmonsivais/Desktop/secom/mlruns/0/03274822e87f43e2aad5c7e637c81287/artifacts/xgboost_smote
 status: READY
 status_message: null
 user_id: null

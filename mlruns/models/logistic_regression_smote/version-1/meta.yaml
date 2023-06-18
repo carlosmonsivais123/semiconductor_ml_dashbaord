@@ -1,12 +1,12 @@
 aliases: []
-creation_timestamp: 1686987079533
+creation_timestamp: 1687124628296
 current_stage: None
 description: null
-last_updated_timestamp: 1686987079533
+last_updated_timestamp: 1687124628296
 name: logistic_regression_smote
-run_id: 9906050c8e714ad48b45d2ae18809d91
+run_id: a458c1c91238456696b510b5df2d89b4
 run_link: null
-source: file:///Users/carlosmonsivais/Desktop/secom/mlruns/0/9906050c8e714ad48b45d2ae18809d91/artifacts/logistic_regression_smote
+source: file:///Users/carlosmonsivais/Desktop/secom/mlruns/0/a458c1c91238456696b510b5df2d89b4/artifacts/logistic_regression_smote
 status: READY
 status_message: null
 user_id: null

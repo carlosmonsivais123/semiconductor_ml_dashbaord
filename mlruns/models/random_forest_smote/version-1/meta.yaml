@@ -1,12 +1,12 @@
 aliases: []
-creation_timestamp: 1686987110612
+creation_timestamp: 1687125248264
 current_stage: None
 description: null
-last_updated_timestamp: 1686987110612
+last_updated_timestamp: 1687125248264
 name: random_forest_smote
-run_id: c5a375bef60d40d5a9fed750294a93cb
+run_id: 8a5010e3afec4a8bbdbc6a3cfbe42f5a
 run_link: null
-source: file:///Users/carlosmonsivais/Desktop/secom/mlruns/0/c5a375bef60d40d5a9fed750294a93cb/artifacts/random_forest_smote
+source: file:///Users/carlosmonsivais/Desktop/secom/mlruns/0/8a5010e3afec4a8bbdbc6a3cfbe42f5a/artifacts/random_forest_smote
 status: READY
 status_message: null
 user_id: null

@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/carlosmonsivais/Desktop/secom/mlruns/0/4d962818ecb945dfa29a7804c7e7a3e7/artifacts
+end_time: 1687125291451
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 4d962818ecb945dfa29a7804c7e7a3e7
+run_name: naive_bayes_gridsearch_cv_smote
+run_uuid: 4d962818ecb945dfa29a7804c7e7a3e7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1687125290602
+status: 3
+tags: []
+user_id: carlosmonsivais

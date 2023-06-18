@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/carlosmonsivais/Desktop/secom/mlruns/0/ce1993f493e54d87b761c48371a23333/artifacts
+end_time: 1687125290601
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: ce1993f493e54d87b761c48371a23333
+run_name: support_vector_machine_gridsearch_cv_smote
+run_uuid: ce1993f493e54d87b761c48371a23333
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1687125248268
+status: 3
+tags: []
+user_id: carlosmonsivais

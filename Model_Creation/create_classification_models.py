@@ -76,17 +76,20 @@ class Create_Classification_Models:
         
         model_parameter_dictionary={'xgboost': [{'objective': ['binary:logistic', 'reg:logistic'],
                                                  'max_depth': [6, 20, 40],
-                                                 'n_estimators': [100, 200, 300, 400],
+                                                 'n_estimators': [100, 300, 500, 1000],
                                                  'booster': ['gbtree', 'gblinear', 'dart'], 
                                                  'learning_rate': [0.01, 0.1, 1.0]}], 
-                                    'logistic_regression': [{'C': [0.01, 0.1, 1.0],
+                                    'logistic_regression': [{'C': [0.0001, 0.001, 0.01, 0.1, 0.5, 1.0],
                                                              'solver': ['lbfgs', 'liblinear', 'newton-cg', 'newton-cholesky', 'sag', 'saga'],
                                                              'max_iter': [100, 200]}], 
                                     'random_forest': [{'n_estimators': [100, 150, 200],
-                                                       'criterion': ['gini', 'entropy', 'log_loss']}], 
-                                    'support_vector_machine': [{'C': [0.001, 0.1, 1.0],
-                                                                'kernel': ['linear', 'poly', 'rbf', 'sigmoid']}], 
-                                    'naive_bayes': [{'var_smoothing': [0.001, 0.000001, 0.000000001]}], 
+                                                       'criterion': ['gini', 'entropy', 'log_loss'],
+                                                       'max_features': ['sqrt', 'log2', None],
+                                                       'class_weight': ['balanced', 'balanced_subsample']}], 
+                                    'support_vector_machine': [{'C': [0.0001, 0.001, 0.01, 0.1, 0.5, 1.0],
+                                                                'kernel': ['linear', 'poly', 'rbf', 'sigmoid'],
+                                                                 'degree': [2, 3, 4, 5]}], 
+                                    'naive_bayes': [{'var_smoothing': [0.1, 0.01, 0.001, 0.000001, 0.000000001]}], 
                                     'k_nearest_neighbor': [{'n_neighbors': [2, 3, 4],
                                                              'weights': ['uniform', 'distance'],
                                                              'algorithm': ['ball_tree', 'kd_tree', 'brute']}]}
@@ -108,6 +111,41 @@ class Create_Classification_Models:
 
                 predictions=sklearn_pipeline.predict(X_test)
 
+                # parameters log
+                model_params_artifact=sklearn_pipeline.named_steps[f'{model}_cv_step'].best_params_
+                if model == 'xgboost': 
+                    mlflow.log_param('objective', model_params_artifact['objective'])
+                    mlflow.log_param('max_depth', model_params_artifact['max_depth'])
+                    mlflow.log_param('n_estimators', model_params_artifact['n_estimators'])
+                    mlflow.log_param('booster', model_params_artifact['booster'])
+                    mlflow.log_param('learning_rate', model_params_artifact['learning_rate'])
+
+                if model=='logistic_regression':
+                    mlflow.log_param('C', model_params_artifact['C'])
+                    mlflow.log_param('solver', model_params_artifact['solver'])
+                    mlflow.log_param('max_iter', model_params_artifact['max_iter'])
+
+                if model=='random_forest':
+                    mlflow.log_param('n_estimators', model_params_artifact['n_estimators'])
+                    mlflow.log_param('criterion', model_params_artifact['criterion'])
+                    mlflow.log_param('max_features', model_params_artifact['max_features'])
+                    mlflow.log_param('class_weight', model_params_artifact['class_weight'])
+
+                if model=='support_vector_machine':
+                    mlflow.log_param('C', model_params_artifact['C'])
+                    mlflow.log_param('kernel', model_params_artifact['kernel'])
+                    mlflow.log_param('degree', model_params_artifact['degree'])
+
+                if model=='naive_bayes':
+                    mlflow.log_param('var_smoothing', model_params_artifact['var_smoothing'])
+
+                if model=='k_nearest_neighbor':
+                    mlflow.log_param('n_neighbors', model_params_artifact['n_neighbors'])
+                    mlflow.log_param('weights', model_params_artifact['weights'])
+                    mlflow.log_param('algorithm', model_params_artifact['algorithm'])
+
+
+                # metrics log
                 mlflow.log_metric(f"accuracy", 
                                   accuracy_score(y_test, predictions))
                 mlflow.log_metric(f"precision", 
@@ -119,6 +157,7 @@ class Create_Classification_Models:
                 mlflow.log_dict(confusion_matrix(y_test, predictions).tolist(), 
                                 f"confusion_matrix.txt")
 
+                # model log
                 signature=infer_signature(X_test, predictions)
                 mlflow.sklearn.log_model(sklearn_pipeline, 
                                          f"{model}_smote", 

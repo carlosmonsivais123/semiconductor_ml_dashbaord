@@ -73,7 +73,9 @@ exploratory_data_analysis.label_counts_by_dow(df=clean_df_corr_drop,
                                               plot_location=eda_visualizatiion_graph_output)
 
 
+
 ################## Splitting Data ##################
+# Splitting into training and testing dataframes
 training_df, testing_df=create_train_test_split.create_and_save_train_test_split(df=clean_df_corr_drop,
                                                                          random_state_value=random_state_value,
                                                                          training_data_output_location=training_data_output_location, 
@@ -85,9 +87,11 @@ create_train_test_split.evaluate_data_balance_for_train_test_split(train_df=trai
 
 
 ################## MLflow Model Creation and Storage ##################
+# Creating splits for X and y data for training and testing
 X_train, y_train, X_test, y_test=create_classification_models.create_X_and_y_data(train_df=training_df, 
                                                                                   test_df=testing_df)
 
+# Modeling process using GridsearchCV and storing models in MLflow
 create_classification_models.gridsearch_cv_best_model_mlflow(train_df=X_train,
                                                              test_df=y_train,
                                                              X_test=X_test,
