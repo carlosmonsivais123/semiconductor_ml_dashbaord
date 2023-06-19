@@ -28,6 +28,8 @@ class Read_And_Merge_Data:
 
         combined_df['day_of_week']=combined_df['Time'].dt.day_name()
 
+        combined_df['Label']=combined_df['Label'].map({-1: 0, 1: 1})
+
         print(f'The shape of the combined values and labels is {combined_df.shape}\n')
 
         combined_df.to_csv(merged_data_location, index=False, header=True)

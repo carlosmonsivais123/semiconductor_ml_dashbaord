@@ -41,8 +41,8 @@ class Create_Train_Test_Split:
                                             'Testing Data Label Proportions', 
                                             'Training Data Label Proportions by Day of Week: Label 1', 
                                             'Testing Data Label Proportions by Day of Week: Label 1',
-                                            'Training Data Label Proportions by Day of Week: Label -1',
-                                            'Testing Data Label Proportions by Day of Week: Label -1'),
+                                            'Training Data Label Proportions by Day of Week: Label 0',
+                                            'Testing Data Label Proportions by Day of Week: Label 0'),
                             shared_yaxes='rows')
 
         fig.add_trace(go.Bar(x=train_label_counts['Label'], 
@@ -74,18 +74,18 @@ class Create_Train_Test_Split:
                     row=2, col=2)
         
 
-        fig.add_trace(go.Bar(x=train_labels_by_dow[train_labels_by_dow['Label']=='-1']['day_of_week'], 
-                             y=train_labels_by_dow[train_labels_by_dow['Label']=='-1']['Percentage'], 
-                             name='Training Data Label Proportions by Day of Week: Label -1',
-                             text=round(train_labels_by_dow[train_labels_by_dow['Label']=='-1']['Percentage'], 2),
+        fig.add_trace(go.Bar(x=train_labels_by_dow[train_labels_by_dow['Label']=='0']['day_of_week'], 
+                             y=train_labels_by_dow[train_labels_by_dow['Label']=='0']['Percentage'], 
+                             name='Training Data Label Proportions by Day of Week: Label 0',
+                             text=round(train_labels_by_dow[train_labels_by_dow['Label']=='0']['Percentage'], 2),
                              textposition='auto'),
                     row=3, col=1)
 
 
-        fig.add_trace(go.Bar(x=test_labels_by_dow[test_labels_by_dow['Label']=='-1']['day_of_week'], 
-                             y=test_labels_by_dow[test_labels_by_dow['Label']=='-1']['Percentage'], 
-                             name='Testing Data Label Proportions by Day of Week: Label -1',
-                             text=round(test_labels_by_dow[test_labels_by_dow['Label']=='-1']['Percentage'], 2),
+        fig.add_trace(go.Bar(x=test_labels_by_dow[test_labels_by_dow['Label']=='0']['day_of_week'], 
+                             y=test_labels_by_dow[test_labels_by_dow['Label']=='0']['Percentage'], 
+                             name='Testing Data Label Proportions by Day of Week: Label 0',
+                             text=round(test_labels_by_dow[test_labels_by_dow['Label']=='0']['Percentage'], 2),
                              textposition='auto'),
                     row=3, col=2)
         

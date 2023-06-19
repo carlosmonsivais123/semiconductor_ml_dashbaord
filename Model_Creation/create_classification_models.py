@@ -24,12 +24,10 @@ class Create_Classification_Models:
         X_train=train_df[[ele for ele in train_df.columns.tolist() if ele not in ['Label', 'Time']]]
         X_train.columns=X_train.columns.astype(str)
         y_train=pd.DataFrame(train_df['Label'])
-        y_train['Label']=y_train['Label'].map({"-1": 0, "1": 1})
 
         X_test=test_df[[ele for ele in test_df.columns.tolist() if ele not in ['Label', 'Time']]]
         X_test.columns=X_test.columns.astype(str)
         y_test=pd.DataFrame(test_df['Label'])
-        y_test['Label']=y_test['Label'].map({"-1": 0, "1": 1})
 
         return X_train, y_train, X_test, y_test
     

@@ -1,11 +1,10 @@
 import streamlit as st
 
-st.set_page_config(page_title="introduction",
-                   page_icon='👋')
+st.set_page_config(page_title="Introduction")
 
-st.write("# Semi-Conductor Manufacturing Process Dashboard 🧑‍💻")
+st.write("# Semi-Conductor Manufacturing Process Dashboard")
 
-st.sidebar.success("Introduction 👋")
+st.sidebar.success("Introduction")
 
 st.markdown(
     """

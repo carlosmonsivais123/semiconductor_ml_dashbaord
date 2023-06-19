@@ -1,15 +1,19 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 
+import plotly.graph_objects as go
 import plotly.express as px
 
 st.set_page_config(page_title="Summary Stats EDA",
-                   page_icon='📊')
+                   layout="wide")
 
-st.write("# Summary Stats EDA 📊")
+st.write("# Summary Stats EDA")
 
-st.sidebar.success("Summary Stats EDA 📊")
+st.sidebar.success("Summary Stats EDA")
 
+
+original_data_df=pd.read_csv('/Users/carlosmonsivais/Desktop/secom/data/merged_original_data.csv')
 clean_data_df=pd.read_csv('/Users/carlosmonsivais/Desktop/secom/data/clean_data.csv')
 
 label_counts=pd.DataFrame(clean_data_df.groupby('Label')['Label'].count()).\
@@ -21,7 +25,7 @@ label_count_barplot=px.bar(label_counts,
                             y='Label Count', 
                             title='Label Count',
                             color='Label')
-label_count_barplot.update_layout(title_x=0.5)
+label_count_barplot.update_layout(title_x=0.40)
 
 
 clean_data_df['Label']=clean_data_df['Label'].astype(str)
@@ -30,13 +34,59 @@ labels_over_time=px.scatter(clean_data_df,
                             y='Label',
                             title='Labels Over Time',
                             color='Label')
-labels_over_time.update_layout(title_x=0.5)
+labels_over_time.update_layout(title_x=0.40)
 
-container1 = st.container()
-col1, col2 = st.columns(2)
-
+container1=st.container()
+col1, col2=st.columns(2)
 with container1:
     with col1:
         st.plotly_chart(label_count_barplot, use_container_width=True)
     with col2:
         st.plotly_chart(labels_over_time, use_container_width=True)
+
+
+
+
+labels_by_dow=clean_data_df.groupby(['day_of_week', 'Label'])['Time'].count().reset_index(drop=False)
+labels_by_dow=labels_by_dow.rename(columns={'Time': 'Count'})
+labels_by_dow['Percentage']=(labels_by_dow['Count']/labels_by_dow['Count'].sum()) * 100
+
+dow_labels_barplot=px.bar(labels_by_dow, 
+                            x="day_of_week",
+                            y="Percentage", 
+                            color="Label", 
+                            title='Percentage of Label Occurence by Day of Week',
+                            barmode='group')
+dow_labels_barplot.update_layout(title_x=0.30)
+dow_labels_barplot.update_xaxes(categoryorder='array', categoryarray= ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
+st.plotly_chart(dow_labels_barplot, use_container_width=True)
+
+
+
+df_corr_original=original_data_df[original_data_df.columns[~original_data_df.columns.isin(['Label', 'Time', 'day_of_week'])]].corr()
+mask_original_data=np.triu(np.ones_like(df_corr_original, dtype=bool))
+original_data_corr_map=go.Figure(go.Heatmap(z=df_corr_original.mask(mask_original_data),
+                                            x=df_corr_original.columns,
+                                            y=df_corr_original.columns,
+                                            zmin=-1,
+                                            zmax=1))
+original_data_corr_map.update_layout(title='Original Data Correlation Heatmap',
+                                     title_x=0.30)
+
+df_corr_clean=clean_data_df[clean_data_df.columns[~clean_data_df.columns.isin(['Label', 'Time', 'day_of_week'])]].corr()
+mask_clean_data=np.triu(np.ones_like(df_corr_clean, dtype=bool))
+clean_data_corr_map=go.Figure(go.Heatmap(z=df_corr_clean.mask(mask_clean_data),
+                                      x=df_corr_clean.columns,
+                                      y=df_corr_clean.columns,
+                                      zmin=-1,
+                                      zmax=1))
+clean_data_corr_map.update_layout(title='Clean Data Correlation Heatmap', 
+                                  title_x=0.30)
+
+container2=st.container()
+col3, col4=st.columns(2)
+with container2:
+    with col3:
+        st.plotly_chart(original_data_corr_map, use_container_width=True)
+    with col4:
+        st.plotly_chart(clean_data_corr_map, use_container_width=True)

@@ -84,4 +84,5 @@ class Exploratory_Data_Analysis:
                                   title='Percentage of Label Occurence by Day of Week',
                                   barmode='group')
         dow_labels_barplot.update_layout(title_x=0.5)
+        dow_labels_barplot.update_xaxes(categoryorder='array', categoryarray= ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
         dow_labels_barplot.write_image(f"{plot_location}/label_barplot_by_dow.png")
