@@ -82,7 +82,7 @@ option=st.selectbox('Please Select the Model For Predictions and Results',
 
 st.write('You selected:', option, 'Model')
 
-selected_model=mlflow.pyfunc.load_model(f'/Users/carlosmonsivais/Desktop/secom/mlruns/0/{model_link_dictionary[option]}/artifacts/{model_name_dictionary[option]}')
+selected_model=mlflow.pyfunc.load_model(f'mlruns/0/{model_link_dictionary[option]}/artifacts/{model_name_dictionary[option]}')
 predictions=selected_model.predict(test_df)
 
 predictions_df=pd.DataFrame({'Time': test_df['Time'], 'Actual': test_df['Label'], 'Prediction': predictions})
@@ -130,7 +130,7 @@ st.write("#### XGBoost Model Feature Importance")
 st.markdown('''Since I chose the XGBoost model as the best mode, I wanted to look at the important features in the model so that for the next iteration, 
 we may only want to model on these features to reduce noise in other features.
 ''')
-sklearn_pipeline_xgboost_model=mlflow.sklearn.load_model(f'/Users/carlosmonsivais/Desktop/secom/mlruns/0/03274822e87f43e2aad5c7e637c81287/artifacts/xgboost_smote')
+sklearn_pipeline_xgboost_model=mlflow.sklearn.load_model(f'mlruns/0/03274822e87f43e2aad5c7e637c81287/artifacts/xgboost_smote')
 predictions=sklearn_pipeline_xgboost_model.predict(test_df)
 xgboost_model=sklearn_pipeline_xgboost_model.named_steps['xgboost_cv_step']
 feature_importance_values=pd.DataFrame(xgboost_model.best_estimator_.get_booster().get_score(importance_type='gain'), index=[0]).transpose().reset_index(drop=False)
