@@ -15,7 +15,7 @@ class Read_And_Merge_Data:
         return data_values, data_labels
     
 
-    def merge_values_and_labels(self):
+    def merge_values_and_labels(self, merged_data_location):
         self.values=self.read_data()[0]
         self.labels=self.read_data()[1]
 
@@ -29,5 +29,9 @@ class Read_And_Merge_Data:
         combined_df['day_of_week']=combined_df['Time'].dt.day_name()
 
         print(f'The shape of the combined values and labels is {combined_df.shape}\n')
+
+        combined_df.to_csv(merged_data_location, index=False, header=True)
+
+        print(f'The merged data has been output to: {merged_data_location}\n')
 
         return combined_df

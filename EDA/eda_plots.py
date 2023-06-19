@@ -42,7 +42,7 @@ class Exploratory_Data_Analysis:
         plt.savefig(f"{plot_location}/correlation_heatmap_all_data.png")
 
 
-    def remove_highly_correlated_features(self, df, correlation_threshold):
+    def remove_highly_correlated_features(self, df, correlation_threshold, clean_data_location):
         print(f'Before removing features with over an {correlation_threshold*100}% correlation the data had a shape of {df.shape}')
 
         corr_vars_list=[ele for ele in df.columns.tolist() if ele not in ['Label', 'Time', 'day_of_week']]
@@ -52,7 +52,11 @@ class Exploratory_Data_Analysis:
                                     selection_method='missing_values').\
                                         fit_transform(df)
         
-        print(f'After removing features with over an {correlation_threshold*100}% correlation the data has a shape of {df.shape}\n')
+        print(f'After removing features with over an {correlation_threshold*100}% correlation the data has a shape of {df.shape}')
+
+        df.to_csv(clean_data_location, index=False, header=False)
+
+        print(f'The clean data has been output to: {clean_data_location}\n')
         
         return df
     

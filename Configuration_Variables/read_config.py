@@ -7,6 +7,10 @@ with open('/Users/carlosmonsivais/Desktop/secom/Configuration_Variables/config.y
 secom_data_values_location=input_vars['Reading_Data_Location']['secom_data_values_location']
 secom_data_labels_location=input_vars['Reading_Data_Location']['secom_data_labels_location']
 
+merged_data_location=input_vars['Reading_Data_Location']['merged_data_location']
+
+clean_data_location=input_vars['Reading_Data_Location']['clean_data_location']
+
 training_data_location=input_vars['Reading_Data_Location']['training_data_location']
 testing_data_location=input_vars['Reading_Data_Location']['testing_data_location']
 

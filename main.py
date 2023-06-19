@@ -1,7 +1,9 @@
 from Configuration_Variables.read_config import secom_data_values_location, secom_data_labels_location, \
+                                                merged_data_location, \
                                                 eda_visualizatiion_graph_output, \
                                                 missing_value_threshold, unique_value_threshold, \
                                                 correlation_drop_threshold, \
+                                                clean_data_location, \
                                                 random_state_value, \
                                                 training_data_output_location, testing_data_output_location
 from Read_Data.read_data import Read_And_Merge_Data
@@ -20,7 +22,7 @@ create_classification_models=Create_Classification_Models(random_state=random_st
 
 ################## Cleaning Data ##################
 # Merging Values and Labels Into a Single Dataset
-data_df=read_and_merge_data.merge_values_and_labels()
+data_df=read_and_merge_data.merge_values_and_labels(merged_data_location=merged_data_location)
 
 # Missing Values Heatmap: All Data
 clean_data.all_missing_values_visualizations(df=data_df, 
@@ -62,7 +64,8 @@ exploratory_data_analysis.correlation_plot(df=clean_df,
 
 # Removing Highly Correlated Features
 clean_df_corr_drop=exploratory_data_analysis.remove_highly_correlated_features(df=clean_df, 
-                                                                               correlation_threshold=correlation_drop_threshold)
+                                                                               correlation_threshold=correlation_drop_threshold,
+                                                                               clean_data_location=clean_data_location)
 
 # Correlation Heatmap: After Removing Highly Correlated Features
 exploratory_data_analysis.correlation_plot_after_removing_high_corr(df=clean_df_corr_drop,
@@ -86,13 +89,14 @@ create_train_test_split.evaluate_data_balance_for_train_test_split(train_df=trai
                                                                    plot_location=eda_visualizatiion_graph_output)
 
 
-################## MLflow Model Creation and Storage ##################
-# Creating splits for X and y data for training and testing
-X_train, y_train, X_test, y_test=create_classification_models.create_X_and_y_data(train_df=training_df, 
-                                                                                  test_df=testing_df)
 
-# Modeling process using GridsearchCV and storing models in MLflow
-create_classification_models.gridsearch_cv_best_model_mlflow(train_df=X_train,
-                                                             test_df=y_train,
-                                                             X_test=X_test,
-                                                             y_test=y_test)
+################## MLflow Model Creation and Storage ##################
+# # Creating splits for X and y data for training and testing
+# X_train, y_train, X_test, y_test=create_classification_models.create_X_and_y_data(train_df=training_df, 
+#                                                                                   test_df=testing_df)
+
+# # Modeling process using GridsearchCV and storing models in MLflow
+# create_classification_models.gridsearch_cv_best_model_mlflow(train_df=X_train,
+#                                                              test_df=y_train,
+#                                                              X_test=X_test,
+#                                                              y_test=y_test)
