@@ -1,0 +1,13 @@
+aliases: []
+creation_timestamp: 1687125291449
+current_stage: None
+description: null
+last_updated_timestamp: 1687125291449
+name: naive_bayes_smote
+run_id: 4d962818ecb945dfa29a7804c7e7a3e7
+run_link: null
+source: file:///Users/carlosmonsivais/Desktop/secom/mlruns/0/4d962818ecb945dfa29a7804c7e7a3e7/artifacts/naive_bayes_smote
+status: READY
+status_message: null
+user_id: null
+version: 1

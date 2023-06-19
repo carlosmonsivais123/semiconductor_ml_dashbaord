@@ -1,0 +1,13 @@
+aliases: []
+creation_timestamp: 1687125248264
+current_stage: None
+description: null
+last_updated_timestamp: 1687125248264
+name: random_forest_smote
+run_id: 8a5010e3afec4a8bbdbc6a3cfbe42f5a
+run_link: null
+source: file:///Users/carlosmonsivais/Desktop/secom/mlruns/0/8a5010e3afec4a8bbdbc6a3cfbe42f5a/artifacts/random_forest_smote
+status: READY
+status_message: null
+user_id: null
+version: 1

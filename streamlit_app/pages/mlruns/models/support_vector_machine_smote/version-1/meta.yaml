@@ -1,0 +1,13 @@
+aliases: []
+creation_timestamp: 1687125290599
+current_stage: None
+description: null
+last_updated_timestamp: 1687125290599
+name: support_vector_machine_smote
+run_id: ce1993f493e54d87b761c48371a23333
+run_link: null
+source: file:///Users/carlosmonsivais/Desktop/secom/mlruns/0/ce1993f493e54d87b761c48371a23333/artifacts/support_vector_machine_smote
+status: READY
+status_message: null
+user_id: null
+version: 1

@@ -13,8 +13,8 @@ st.write("# Prediction Models")
 
 st.sidebar.success("Prediction Models")
 
-train_df=pd.read_csv('../data/training_data.csv')
-test_df=pd.read_csv('../data/testing_data.csv')
+train_df=pd.read_csv('data/training_data.csv')
+test_df=pd.read_csv('data/testing_data.csv')
 
 folders=os.listdir('/Users/carlosmonsivais/Desktop/secom/mlruns/0')
 folders.pop()
@@ -36,9 +36,9 @@ recall=[]
 
 for folder in folders:
     for metric in metric_list:
-        model_metrics_file=f'../mlruns/0/{folder}/metrics/{metric}'
+        model_metrics_file=f'mlruns/0/{folder}/metrics/{metric}'
 
-        model_metric=pd.read_csv(f'{model_metrics_file}', sep=" ", header=None)
+        model_metric=pd.read_csv(f'../{model_metrics_file}', sep=" ", header=None)
         
         if metric=='accuracy':
             accuracy.append(model_metric[1].values[0])
