@@ -5,12 +5,12 @@ import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
 
-st.set_page_config(page_title="Summary Stats EDA",
+st.set_page_config(page_title="Exploratory Data Analysis",
                    layout="wide")
 
-st.write("# Summary Stats EDA")
+st.write("# Exploratory Data Analysis")
 
-st.sidebar.success("Summary Stats EDA")
+st.sidebar.success("Exploratory Data Analysis")
 
 
 original_data_df=pd.read_csv('/Users/carlosmonsivais/Desktop/secom/data/merged_original_data.csv')
