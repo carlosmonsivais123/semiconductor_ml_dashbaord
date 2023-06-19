@@ -21,6 +21,12 @@ folders.pop()
 folders.remove('.DS_Store')
 
 st.write("#### Overall Model Performance")
+st.markdown('''Below are the models that I tried to implement to create a solution, where they were measure on multiple metrics including:
+1. Accuracy: The overall number of correct predictions.
+2. F1: The average of Precision and Recall to give a different measurement of accuracy. This measures the model's ability to capture positive and negative cases.
+3. Precision: The rate at which positive cases are being predicted.
+4. Recall: The proportion of actual positive cases that were identified.
+''')
 metric_list=['accuracy', 'f1', 'precision', 'recall']
 
 accuracy=[]
@@ -61,8 +67,8 @@ hide_table_row_index = """
 st.markdown(hide_table_row_index, unsafe_allow_html=True)
 st.table(model_performance)
 
-st.write("#### Based on Accuracy, F1, Precision and Recall, the best performing model is XGBoost")
 
+st.write("#### Based on Accuracy, F1, Precision and Recall, the best performing model is XGBoost")
 model_link_dictionary={'Naive Bayes': '4d962818ecb945dfa29a7804c7e7a3e7', 'Random Forest': '8a5010e3afec4a8bbdbc6a3cfbe42f5a',
                        'XGBoost': '03274822e87f43e2aad5c7e637c81287', 'K-Nearest Neighbors': '5355331ef1dc4929bdfb73da471dad43',
                        'Logistic Regression': 'a458c1c91238456696b510b5df2d89b4', 'SVM': 'ce1993f493e54d87b761c48371a23333'}
@@ -98,12 +104,14 @@ predictions_scatter=go.Figure()
 predictions_scatter.add_trace(go.Scatter(x=predictions_df['Time'], 
                                          y=predictions_df['Actual'],
                                          mode='markers',
-                                         opacity=0.4,
+                                         marker=dict(color='Green'),
+                                         opacity=0.7,
                                          name='Actual'))
 predictions_scatter.add_trace(go.Scatter(x=predictions_df['Time'], 
                                          y=predictions_df['Prediction'],
                                          mode='markers',
-                                         opacity=0.5,
+                                         marker=dict(color='Blue'),
+                                         opacity=0.7,
                                          name='Prediction'))
 predictions_scatter.update_layout(title_text='Actual vs Predictions Scatter Plot',
                                   title_x=0.35)
@@ -120,8 +128,9 @@ with container1:
 
 # Feature Importance Graph  
 st.write("#### XGBoost Model Feature Importance")
-
-
+st.markdown('''Since I chose the XGBoost model as the best mode, I wanted to look at the important features in the model so that for the next iteration, 
+we may only want to model on these features to reduce noise in other features.
+''')
 sklearn_pipeline_xgboost_model=mlflow.sklearn.load_model(f'/Users/carlosmonsivais/Desktop/secom/mlruns/0/03274822e87f43e2aad5c7e637c81287/artifacts/xgboost_smote')
 predictions=sklearn_pipeline_xgboost_model.predict(test_df)
 xgboost_model=sklearn_pipeline_xgboost_model.named_steps['xgboost_cv_step']
@@ -141,8 +150,10 @@ feature_importance_values=feature_importance_values[(feature_importance_values['
 # Feature Importance Scatter Plot
 feature_importance_scatter=px.scatter(feature_importance_values, 
                                       x=feature_importance_values.index, 
-                                      y="Information Gain", color="Information Gain",
-                 size='Information Gain', hover_data=['Feature', 'Information Gain'])
+                                      y="Information Gain", 
+                                      color="Information Gain",
+                                      size='Information Gain', 
+                                      hover_data=['Feature', 'Information Gain'])
 feature_importance_scatter.update_layout(title_text='XGBoost Feature Importance Scatter Plot',
                                          title_x=0.25)
 
@@ -163,4 +174,3 @@ with container2:
         st.plotly_chart(feature_importance_scatter, use_container_width=True)
     with col4:
         st.plotly_chart(feature_importance_table, use_container_width=True)
-

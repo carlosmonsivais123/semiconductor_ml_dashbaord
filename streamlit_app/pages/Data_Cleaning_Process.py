@@ -17,6 +17,8 @@ data_before_imputation_df=pd.read_csv('/Users/carlosmonsivais/Desktop/secom/data
 clean_data_df=pd.read_csv('/Users/carlosmonsivais/Desktop/secom/data/clean_data.csv')
 
 st.write("#### Data Before Pre-Processing")
+st.write('''Here is the original data, you can see that there are a lot of missing values throughout the dataset. There also seems to be a slight spike of missing values that occur
+         during Monday, Tuesday, Thursday, and Friday, this is something that should be looked at more closely.''')
 # Chart 1
 df_na_original=original_data_df.isna()
 df_na_original=df_na_original.replace({False: 0, True: 1})
@@ -26,7 +28,7 @@ original_data_missing_values=go.Figure(go.Heatmap(z=df_na_original.values,
                                                   zmin=0,
                                                   zmax=1))
 original_data_missing_values.update_layout(title='Original Data Missing Values Heatmap',
-                                           title_x=0.30)
+                                           title_x=0.25)
 
 # Chart 2
 missing_values_by_dow=original_data_df.set_index('day_of_week').\
@@ -47,7 +49,7 @@ missing_dow_fig=px.bar(missing_values_by_dow,
                         y="Missing Rows Percentage", 
                         color="Day of Week", 
                         title="Percentage of Missing Values by Day of the Week")
-missing_dow_fig.update_layout(title_x=0.25,
+missing_dow_fig.update_layout(title_x=0.15,
                               margin=dict(l=0, r=0, b=0))
 
 container1 = st.container()
@@ -61,6 +63,12 @@ with container1:
 
 
 st.write("#### Data After Pre-Processing, but before Imputation")
+st.markdown('''Here is the data after pre-processing steps have been applied which include the following:
+1. Removing columns that have over 95% of their data missing.
+2. Removing columns with only 3 unique values.
+
+Here we can see that after applying this data cleaning method, there is a spike on Friday contributing to 31% of all missing data occurrences.
+''')
 # Chart 1
 df_na_before_imputation=data_before_imputation_df.isna()
 df_na_before_imputation=df_na_before_imputation.replace({False: 0, True: 1})
@@ -106,6 +114,12 @@ with container2:
 
 
 st.write("#### Data After Imputation")
+st.markdown('''Here is the data after pre-processing steps and imputation have been applied which include the following:
+1. Imputing any missing values with the median value of that feature to reduce variability.
+2. Removing features that have 60% or more correlation between each other.
+
+As a result, we don't have any more missing data and can continue.
+''')
 # Chart 1
 df_after_imputation=clean_data_df.isna()
 df_after_imputation=df_after_imputation.replace({False: 0, True: 1})

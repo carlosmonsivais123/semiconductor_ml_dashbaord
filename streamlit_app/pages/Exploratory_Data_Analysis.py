@@ -16,6 +16,15 @@ st.sidebar.success("Exploratory Data Analysis")
 original_data_df=pd.read_csv('/Users/carlosmonsivais/Desktop/secom/data/merged_original_data.csv')
 clean_data_df=pd.read_csv('/Users/carlosmonsivais/Desktop/secom/data/clean_data.csv')
 
+st.write("#### Label Imbalance")
+st.markdown('''We are dealing with an interesting classification problem where we can see that there is an imbalance of labels. The labels have the following meanings:
+- 0: Pass (During semi-conductor in house testing) 
+- 1: Fail (During semi-conductor in house testing)
+
+With this in mind there are a lot more 0 (Pass) values over time which accounts for about 93% of cases in our data and there are approximately 7% 1 (Fail) Labels.
+
+There does not seem to be any label imbalance issues occuring throughout the week as the levels are relatively within stable limits, there are no obvious spikes, given the scale of the data.
+''')
 label_counts=pd.DataFrame(clean_data_df.groupby('Label')['Label'].count()).\
     rename(columns={'Label': 'Label Count'}).reset_index(drop=False)
 label_counts['Label']=label_counts['Label'].astype(str)
@@ -63,6 +72,11 @@ st.plotly_chart(dow_labels_barplot, use_container_width=True)
 
 
 
+st.write("#### Data Correlation")
+st.markdown('''Keeping in mind correlation (in this case Spearman Correlation), is a linear measurement between features, it was interesting to see how highly correlated some features were.
+This could be due to maybe there being some duplicate column values, or dependent features. As a result, to avoid multicollinearity and therefore have narrower confidence intervals for our model coefficients,
+and to also not have repeated features, I removed highly correlated variables.
+''')
 df_corr_original=original_data_df[original_data_df.columns[~original_data_df.columns.isin(['Label', 'Time', 'day_of_week'])]].corr()
 mask_original_data=np.triu(np.ones_like(df_corr_original, dtype=bool))
 original_data_corr_map=go.Figure(go.Heatmap(z=df_corr_original.mask(mask_original_data),
