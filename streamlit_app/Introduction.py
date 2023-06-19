@@ -37,7 +37,7 @@ with col1:
     st.write(' ')
 
 with col2:
-    st.image("/Users/carlosmonsivais/Desktop/secom/Images/semi-conductor.jpeg")
+    st.image("../Images/semi-conductor.jpeg")
 
 with col3:
     st.write(' ')

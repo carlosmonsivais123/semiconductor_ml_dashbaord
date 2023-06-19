@@ -12,9 +12,9 @@ st.write("# Data Cleaning Process")
 
 st.sidebar.success("Data Cleaning Process")
 
-original_data_df=pd.read_csv('/Users/carlosmonsivais/Desktop/secom/data/merged_original_data.csv')
-data_before_imputation_df=pd.read_csv('/Users/carlosmonsivais/Desktop/secom/data/before_data_imputation.csv')
-clean_data_df=pd.read_csv('/Users/carlosmonsivais/Desktop/secom/data/clean_data.csv')
+original_data_df=pd.read_csv('../data/merged_original_data.csv')
+data_before_imputation_df=pd.read_csv('../data/before_data_imputation.csv')
+clean_data_df=pd.read_csv('../data/clean_data.csv')
 
 st.write("#### Data Before Pre-Processing")
 st.write('''Here is the original data, you can see that there are a lot of missing values throughout the dataset. There also seems to be a slight spike of missing values that occur

@@ -1,11 +1,11 @@
 ################## Reading Data ##################
 Reading_Data_Location:
-  secom_data_values_location: '/Users/carlosmonsivais/Desktop/secom/data/secom.data'
-  secom_data_labels_location: '/Users/carlosmonsivais/Desktop/secom/data/secom_labels.data'
+  secom_data_values_location: 'data/secom.data'
+  secom_data_labels_location: 'data/secom_labels.data'
 
 
 ################## EDA Plot Storage ##################
-EDA_Visualizatiion_Graph_Output: '/Users/carlosmonsivais/Desktop/secom/EDA_Output_Plots'
+EDA_Visualizatiion_Graph_Output: 'EDA_Output_Plots'
 
 
 ################## Data Cleaning Values ##################
@@ -20,8 +20,8 @@ Random_State_Value: 3
 
 ################## Output Data ##################
 Output_Data_Location:
-  merged_data_location: '/Users/carlosmonsivais/Desktop/secom/data/merged_original_data.csv'
-  before_data_imputation_location: '/Users/carlosmonsivais/Desktop/secom/data/before_data_imputation.csv'
-  clean_data_location: '/Users/carlosmonsivais/Desktop/secom/data/clean_data.csv'
-  training_data_output_location: '/Users/carlosmonsivais/Desktop/secom/data/training_data.csv'
-  testing_data_output_location: '/Users/carlosmonsivais/Desktop/secom/data/testing_data.csv'
+  merged_data_location: 'data/merged_original_data.csv'
+  before_data_imputation_location: 'data/before_data_imputation.csv'
+  clean_data_location: 'data/clean_data.csv'
+  training_data_output_location: 'data/training_data.csv'
+  testing_data_output_location: 'data/testing_data.csv'
