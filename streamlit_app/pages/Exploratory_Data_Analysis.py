@@ -13,8 +13,8 @@ st.write("# Exploratory Data Analysis")
 st.sidebar.success("Exploratory Data Analysis")
 
 
-original_data_df=pd.read_csv('/Users/carlosmonsivais/Desktop/secom/data/merged_original_data.csv')
-clean_data_df=pd.read_csv('/Users/carlosmonsivais/Desktop/secom/data/clean_data.csv')
+original_data_df=pd.read_csv('../data/merged_original_data.csv')
+clean_data_df=pd.read_csv('../data/clean_data.csv')
 
 st.write("#### Label Imbalance")
 st.markdown('''We are dealing with an interesting classification problem where we can see that there is an imbalance of labels. The labels have the following meanings:
