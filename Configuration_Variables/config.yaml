@@ -3,13 +3,6 @@ Reading_Data_Location:
   secom_data_values_location: '/Users/carlosmonsivais/Desktop/secom/data/secom.data'
   secom_data_labels_location: '/Users/carlosmonsivais/Desktop/secom/data/secom_labels.data'
 
-  merged_data_location: '/Users/carlosmonsivais/Desktop/secom/data/merged_original_data.csv'
-
-  clean_data_location: '/Users/carlosmonsivais/Desktop/secom/data/clean_data.csv'
-
-  training_data_location: '/Users/carlosmonsivais/Desktop/secom/data/training_data.csv'
-  testing_data_location: '/Users/carlosmonsivais/Desktop/secom/data/testing_data.csv'
-
 
 ################## EDA Plot Storage ##################
 EDA_Visualizatiion_Graph_Output: '/Users/carlosmonsivais/Desktop/secom/EDA_Output_Plots'
@@ -27,5 +20,8 @@ Random_State_Value: 3
 
 ################## Output Data ##################
 Output_Data_Location:
+  merged_data_location: '/Users/carlosmonsivais/Desktop/secom/data/merged_original_data.csv'
+  before_data_imputation_location: '/Users/carlosmonsivais/Desktop/secom/data/before_data_imputation.csv'
+  clean_data_location: '/Users/carlosmonsivais/Desktop/secom/data/clean_data.csv'
   training_data_output_location: '/Users/carlosmonsivais/Desktop/secom/data/training_data.csv'
   testing_data_output_location: '/Users/carlosmonsivais/Desktop/secom/data/testing_data.csv'

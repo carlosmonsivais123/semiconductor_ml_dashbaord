@@ -1,5 +1,6 @@
 from Configuration_Variables.read_config import secom_data_values_location, secom_data_labels_location, \
                                                 merged_data_location, \
+                                                before_data_imputation_location, \
                                                 eda_visualizatiion_graph_output, \
                                                 missing_value_threshold, unique_value_threshold, \
                                                 correlation_drop_threshold, \
@@ -38,7 +39,8 @@ clean_df=clean_data.remove_cols_over_missing_threhsold_val(df=data_df,
 
 # Removing Features with Unique Value Threshold
 clean_df=clean_data.remove_columns_with_n_unique_vals(df=clean_df,
-                                                      unique_value_threshold=unique_value_threshold)
+                                                      unique_value_threshold=unique_value_threshold,
+                                                      before_data_imputation_location=before_data_imputation_location)
 
 # Imputation Pipeline Using the Median
 clean_df=clean_data.imputing_with_median(df=clean_df)

@@ -56,7 +56,7 @@ class Clean_Data:
         return df
     
 
-    def remove_columns_with_n_unique_vals(self, df, unique_value_threshold):
+    def remove_columns_with_n_unique_vals(self, df, unique_value_threshold, before_data_imputation_location):
         unique_vals=df.nunique().reset_index(drop=False).\
             rename(columns={'index': 'Column', 0:'Number of Unique Values'}).\
                 sort_values(by='Number of Unique Values', ascending=True)
@@ -66,7 +66,9 @@ class Clean_Data:
 
         df=df.drop(columns=remove_cols)
 
-        print(f'Ater removing columns with only {unique_value_threshold} unique values or less, the shape of the data is {df.shape}\n')
+        print(f'Ater removing columns with only {unique_value_threshold} unique values or less, the shape of the data is {df.shape}')
+        df.to_csv(before_data_imputation_location, index=False, header=True)
+        print(f'Before data imputation, the data has been output to: {before_data_imputation_location}\n')
 
         return df
 
