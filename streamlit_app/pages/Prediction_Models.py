@@ -16,9 +16,8 @@ st.sidebar.success("Prediction Models")
 train_df=pd.read_csv('data/training_data.csv')
 test_df=pd.read_csv('data/testing_data.csv')
 
-folders=os.listdir('/Users/carlosmonsivais/Desktop/secom/mlruns/0')
-folders.pop()
-folders.remove('.DS_Store')
+folders=['5355331ef1dc4929bdfb73da471dad43', '4d962818ecb945dfa29a7804c7e7a3e7', '8a5010e3afec4a8bbdbc6a3cfbe42f5a',
+         '03274822e87f43e2aad5c7e637c81287', 'ce1993f493e54d87b761c48371a23333', 'a458c1c91238456696b510b5df2d89b4']
 
 st.write("#### Overall Model Performance")
 st.markdown('''Below are the models that I tried to implement to create a solution, where they were measure on multiple metrics including:
@@ -36,9 +35,9 @@ recall=[]
 
 for folder in folders:
     for metric in metric_list:
-        model_metrics_file=f'mlruns/0/{folder}/metrics/{metric}'
+        model_metrics_file=f'../mlruns/0/{folder}/metrics/{metric}'
 
-        model_metric=pd.read_csv(f'../{model_metrics_file}', sep=" ", header=None)
+        model_metric=pd.read_csv(f'{model_metrics_file}', sep=" ", header=None)
         
         if metric=='accuracy':
             accuracy.append(model_metric[1].values[0])
