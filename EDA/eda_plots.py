@@ -54,7 +54,7 @@ class Exploratory_Data_Analysis:
         
         print(f'After removing features with over an {correlation_threshold*100}% correlation the data has a shape of {df.shape}')
 
-        df.to_csv(clean_data_location, index=False, header=False)
+        df.to_csv(clean_data_location, index=False, header=True)
 
         print(f'The clean data has been output to: {clean_data_location}\n')
         
