@@ -2,6 +2,10 @@ import streamlit as st
 import os
 import pandas as pd
 import mlflow
+from sklearn.metrics import confusion_matrix 
+import plotly.figure_factory as ff
+import plotly.graph_objects as go
+import plotly.express as px
 
 st.set_page_config(page_title="Prediction Models",
                    layout="wide")
@@ -9,12 +13,14 @@ st.write("# Prediction Models")
 
 st.sidebar.success("Prediction Models")
 
+train_df=pd.read_csv('/Users/carlosmonsivais/Desktop/secom/data/training_data.csv')
 test_df=pd.read_csv('/Users/carlosmonsivais/Desktop/secom/data/testing_data.csv')
 
 folders=os.listdir('/Users/carlosmonsivais/Desktop/secom/mlruns/0')
 folders.pop()
 folders.remove('.DS_Store')
 
+st.write("#### Overall Model Performance")
 metric_list=['accuracy', 'f1', 'precision', 'recall']
 
 accuracy=[]
@@ -66,10 +72,6 @@ model_name_dictionary={'Naive Bayes': 'naive_bayes_smote', 'Random Forest': 'ran
                        'Logistic Regression': 'logistic_regression_smote', 'SVM': 'support_vector_machine_smote'}
 
 
-print(list(model_link_dictionary.keys()))
-print(list(model_link_dictionary.values()))
-
-
 option=st.selectbox('Please Select the Model For Predictions and Results',
                     ('XGBoost', 'Random Forest', 'SVM', 'Logistic Regression', 'K-Nearest Neighbors', 'Naive Bayes'))
 
@@ -78,4 +80,87 @@ st.write('You selected:', option, 'Model')
 selected_model=mlflow.pyfunc.load_model(f'/Users/carlosmonsivais/Desktop/secom/mlruns/0/{model_link_dictionary[option]}/artifacts/{model_name_dictionary[option]}')
 predictions=selected_model.predict(test_df)
 
-print(predictions)
+predictions_df=pd.DataFrame({'Time': test_df['Time'], 'Actual': test_df['Label'], 'Prediction': predictions})
+predictions_df['Time']=pd.to_datetime(predictions_df['Time'])
+predictions_df=predictions_df.sort_values(by='Time', 
+                                          ascending=True).\
+                                            reset_index(drop=True)
+# Confusion Matrix
+sklearn_confusion_matrix_output=confusion_matrix(predictions_df['Actual'].values, predictions_df['Prediction'])
+ 
+confusion_matrix_figure=ff.create_annotated_heatmap(z=sklearn_confusion_matrix_output, x=['0', '1'], y=['0', '1'], colorscale='Viridis')
+confusion_matrix_figure.update_layout(title_text='Confusion Matrix', 
+                                      title_x=0.30)
+
+
+# Actual vs Predictions Scatter Plot
+predictions_scatter=go.Figure()
+predictions_scatter.add_trace(go.Scatter(x=predictions_df['Time'], 
+                                         y=predictions_df['Actual'],
+                                         mode='markers',
+                                         opacity=0.4,
+                                         name='Actual'))
+predictions_scatter.add_trace(go.Scatter(x=predictions_df['Time'], 
+                                         y=predictions_df['Prediction'],
+                                         mode='markers',
+                                         opacity=0.5,
+                                         name='Prediction'))
+predictions_scatter.update_layout(title_text='Actual vs Predictions Scatter Plot',
+                                  title_x=0.35)
+
+container1 = st.container()
+col1, col2 = st.columns([3, 1])
+
+with container1:
+    with col1:
+        st.plotly_chart(predictions_scatter, use_container_width=True)
+    with col2:
+        st.plotly_chart(confusion_matrix_figure, use_container_width=True)
+        
+
+# Feature Importance Graph  
+st.write("#### XGBoost Model Feature Importance")
+
+
+sklearn_pipeline_xgboost_model=mlflow.sklearn.load_model(f'/Users/carlosmonsivais/Desktop/secom/mlruns/0/03274822e87f43e2aad5c7e637c81287/artifacts/xgboost_smote')
+predictions=sklearn_pipeline_xgboost_model.predict(test_df)
+xgboost_model=sklearn_pipeline_xgboost_model.named_steps['xgboost_cv_step']
+feature_importance_values=pd.DataFrame(xgboost_model.best_estimator_.get_booster().get_score(importance_type='gain'), index=[0]).transpose().reset_index(drop=False)
+feature_importance_values.columns=['Feature', 'Information Gain']
+feature_importance_values=feature_importance_values.sort_values(by='Information Gain', ascending=True).reset_index(drop=True)
+
+# Feature Importance Slider 
+max_slider_value=max(feature_importance_values['Information Gain'])
+values=st.slider('Select a range of values', 0.0, max_slider_value, (0.0, max_slider_value))
+st.write('Looking at features with an information gain value between:', values[0], 'and ', round(values[1], 2))
+
+feature_importance_values=feature_importance_values[(feature_importance_values['Information Gain'] >= values[0]) &\
+                                                    (feature_importance_values['Information Gain'] <= values[1])]
+
+
+# Feature Importance Scatter Plot
+feature_importance_scatter=px.scatter(feature_importance_values, 
+                                      x=feature_importance_values.index, 
+                                      y="Information Gain", color="Information Gain",
+                 size='Information Gain', hover_data=['Feature', 'Information Gain'])
+feature_importance_scatter.update_layout(title_text='XGBoost Feature Importance Scatter Plot',
+                                         title_x=0.25)
+
+
+feature_importance_values=feature_importance_values.sort_values(by='Information Gain', ascending=False)
+# Feature Importance Table
+feature_importance_table=go.Figure(data=[go.Table(header=dict(values=list(feature_importance_values.columns)),
+                                                  cells=dict(values=[feature_importance_values['Feature'], 
+                                                                     feature_importance_values['Information Gain']]))])
+feature_importance_table.update_layout(title_text='XGBoost Feature Importance Table',
+                                         title_x=0.0)
+
+
+container2 = st.container()
+col3, col4 = st.columns([3, 1])
+with container2:
+    with col3:
+        st.plotly_chart(feature_importance_scatter, use_container_width=True)
+    with col4:
+        st.plotly_chart(feature_importance_table, use_container_width=True)
+

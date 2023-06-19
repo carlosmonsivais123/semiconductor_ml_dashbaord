@@ -144,7 +144,7 @@ after_imputation_missing_dow_fig.update_layout(title_x=0.25,
 container3 = st.container()
 col5, col6 = st.columns(2)
 
-with container2:
+with container3:
     with col5:
         st.plotly_chart(df_after_imputation_data_missing_values, use_container_width=True)
     with col6:
