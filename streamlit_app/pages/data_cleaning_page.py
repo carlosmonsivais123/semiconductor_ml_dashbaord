@@ -3,6 +3,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
+import plotly.graph_objects as go
 
 st.set_page_config(page_title="data_cleaning",
                    layout="wide")
@@ -14,13 +15,15 @@ st.sidebar.success("Data Cleaning Process")
 original_data_df=pd.read_csv('/Users/carlosmonsivais/Desktop/secom/data/merged_original_data.csv')
 
 # Chart 1
-original_data_missing_values=plt.figure()
-sns.heatmap(original_data_df.isna(),
-            cmap="YlGnBu",
-            cbar_kws={'label': 'Missing Data'}).set(title='Missing Values Heatmap: All Data',
-                                                    xlabel='Columns', 
-                                                    ylabel='Rows')
-
+df_na_original=original_data_df.isna()
+df_na_original=df_na_original.replace({False: 0, True: 1})
+original_data_missing_values=go.Figure(go.Heatmap(z=df_na_original.values,
+                                                  x=df_na_original.columns,
+                                                  y=df_na_original.columns,
+                                                  zmin=-1,
+                                                  zmax=1))
+original_data_missing_values.update_layout(title='Original Data Missing Values Heatmap',
+                                           title_x=0.30)
 
 # Chart 2
 missing_values_by_dow=original_data_df.set_index('day_of_week').\
@@ -49,8 +52,7 @@ col1, col2 = st.columns(2)
 
 with container1:
     with col1:
-        st.pyplot(original_data_missing_values, use_container_width=True)
+        st.plotly_chart(original_data_missing_values, use_container_width=True)
     with col2:
         st.plotly_chart(missing_dow_fig, use_container_width=True)
-
-print(original_data_df.isna())
+        

@@ -76,10 +76,10 @@ original_data_corr_map.update_layout(title='Original Data Correlation Heatmap',
 df_corr_clean=clean_data_df[clean_data_df.columns[~clean_data_df.columns.isin(['Label', 'Time', 'day_of_week'])]].corr()
 mask_clean_data=np.triu(np.ones_like(df_corr_clean, dtype=bool))
 clean_data_corr_map=go.Figure(go.Heatmap(z=df_corr_clean.mask(mask_clean_data),
-                                      x=df_corr_clean.columns,
-                                      y=df_corr_clean.columns,
-                                      zmin=-1,
-                                      zmax=1))
+                                         x=df_corr_clean.columns,
+                                         y=df_corr_clean.columns,
+                                         zmin=-1,
+                                         zmax=1))
 clean_data_corr_map.update_layout(title='Clean Data Correlation Heatmap', 
                                   title_x=0.30)
 
