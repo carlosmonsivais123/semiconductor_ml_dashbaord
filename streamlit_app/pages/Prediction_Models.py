@@ -35,7 +35,7 @@ recall=[]
 
 for folder in folders:
     for metric in metric_list:
-        model_metrics_file=f'../mlruns/0/{folder}/metrics/{metric}'
+        model_metrics_file=f'mlruns/0/{folder}/metrics/{metric}'
 
         model_metric=pd.read_csv(f'{model_metrics_file}', sep=" ", header=None)
         
