@@ -88,7 +88,7 @@ predictions_df=predictions_df.sort_values(by='Time',
 # Confusion Matrix
 sklearn_confusion_matrix_output=confusion_matrix(predictions_df['Actual'].values, predictions_df['Prediction'])
  
-confusion_matrix_figure=ff.create_annotated_heatmap(z=sklearn_confusion_matrix_output, x=['0', '1'], y=['0', '1'], colorscale='Viridis')
+confusion_matrix_figure=ff.create_annotated_heatmap(z=sklearn_confusion_matrix_output, x=['0', '1'], y=['0', '1'], colorscale='Greens')
 confusion_matrix_figure.update_layout(title_text='Confusion Matrix', 
                                       title_x=0.30)
 
