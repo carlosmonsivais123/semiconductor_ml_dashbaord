@@ -93,12 +93,12 @@ create_train_test_split.evaluate_data_balance_for_train_test_split(train_df=trai
 
 
 ################## MLflow Model Creation and Storage ##################
-# # Creating splits for X and y data for training and testing
-# X_train, y_train, X_test, y_test=create_classification_models.create_X_and_y_data(train_df=training_df, 
-#                                                                                   test_df=testing_df)
+# Creating splits for X and y data for training and testing
+X_train, y_train, X_test, y_test=create_classification_models.create_X_and_y_data(train_df=training_df, 
+                                                                                  test_df=testing_df)
 
-# # Modeling process using GridsearchCV and storing models in MLflow
-# create_classification_models.gridsearch_cv_best_model_mlflow(train_df=X_train,
-#                                                              test_df=y_train,
-#                                                              X_test=X_test,
-#                                                              y_test=y_test)
+# Modeling process using GridsearchCV and storing models in MLflow
+create_classification_models.gridsearch_cv_best_model_mlflow(train_df=X_train,
+                                                             test_df=y_train,
+                                                             X_test=X_test,
+                                                             y_test=y_test)
